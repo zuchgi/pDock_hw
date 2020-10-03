@@ -441,9 +441,7 @@ void SystemClock_Config(void);
 #define LED0_PIN    GET_PIN(E, 2)
 #define LED1_PIN    GET_PIN(E, 3)
 #define LED2_PIN    GET_PIN(E, 4)
-#define SIM7600_RESET_PIN       GET_PIN(C, 8)
-#define SIM7600_POWER_PIN       GET_PIN(A, 8)
-#define SIM7600_DCDC_PIN        GET_PIN(C, 9)
+
 
 #define SW0_PIN    GET_PIN(E, 8)
 #define SW1_PIN    GET_PIN(E, 9)
@@ -462,6 +460,15 @@ void SystemClock_Config(void);
 #define DIN5_PIN    GET_PIN(D, 5)
 #define DIN6_PIN    GET_PIN(D, 6)
 #define DIN7_PIN    GET_PIN(D, 7)
+
+#define DOUT0_PIN    GET_PIN(B, 7)
+#define DOUT1_PIN    GET_PIN(B, 8)
+#define DOUT2_PIN    GET_PIN(B, 9)
+#define DOUT3_PIN    GET_PIN(E, 0)
+#define DOUT4_PIN    GET_PIN(B, 3)
+#define DOUT5_PIN    GET_PIN(B, 4)
+#define DOUT6_PIN    GET_PIN(B, 5)
+#define DOUT7_PIN    GET_PIN(B, 6)
 
 #define RS485_EN    GET_PIN(B, 2)
 

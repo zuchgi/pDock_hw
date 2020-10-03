@@ -12,7 +12,6 @@
 #include <board.h>
 #include <rtthread.h>
 #include <rtdevice.h>
-#include "sim7600/sim7600.h"
 
 #define DBG_TAG "board"
 #define DBG_LVL DBG_INFO
@@ -30,12 +29,6 @@ static void boardGpioInit(void){
     rt_pin_write(LED1_PIN, 0);
     rt_pin_write(LED2_PIN, 0);
 
-    rt_pin_mode(SIM7600_DCDC_PIN, PIN_MODE_OUTPUT);
-    rt_pin_write(SIM7600_DCDC_PIN,1);
-    rt_pin_mode(SIM7600_POWER_PIN, PIN_MODE_OUTPUT_OD);//1.8V
-    rt_pin_write(SIM7600_POWER_PIN,0);
-    rt_pin_mode(SIM7600_RESET_PIN, PIN_MODE_OUTPUT_OD);//1.8V
-    rt_pin_write(SIM7600_RESET_PIN,1);
 
     rt_pin_mode(SW0_PIN, PIN_MODE_INPUT_PULLUP);
     rt_pin_mode(SW1_PIN, PIN_MODE_INPUT_PULLUP);
@@ -55,15 +48,24 @@ static void boardGpioInit(void){
     rt_pin_mode(DIN6_PIN, PIN_MODE_INPUT_PULLUP);
     rt_pin_mode(DIN7_PIN, PIN_MODE_INPUT_PULLUP);
 
+    rt_pin_mode(DOUT0_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT1_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT2_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT3_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT4_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT5_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT6_PIN, PIN_MODE_OUTPUT);
+    rt_pin_mode(DOUT7_PIN, PIN_MODE_OUTPUT);
+
     rt_pin_mode(RS485_EN, PIN_MODE_OUTPUT);
 
 }
+
 void platformInit(void){
 
     boardGpioInit();
     chipInint();
-    s7Init();
-    freeModbusInit();
+//    freeModbusInit();
 }
 
 int getBoardId(void){
@@ -110,6 +112,7 @@ int getBoardId(void){
     }
     return rtval;
 }
+
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -135,7 +138,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
 #else
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+    RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
 #endif
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -156,7 +159,7 @@ void SystemClock_Config(void)
   }
   //add by tau for adc
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV8;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
